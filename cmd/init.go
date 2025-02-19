@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
+	"log"
 
+	"github.com/Wexlersolk/wexlgit/internal/handlers"
 	"github.com/spf13/cobra"
 )
 
@@ -12,14 +12,9 @@ var initCmd = cobra.Command{
 	Short: "init it is",
 	Long:  "it is init",
 	Run: func(cmd *cobra.Command, args []string) {
-		_, err := os.Stat(".wgit")
-		if os.IsNotExist(err) {
-			fmt.Println("it doesnt exist")
-			// create it
-		} else {
-			fmt.Println("it already exists")
+		if err := handlers.InitRepository(); err != nil {
+			log.Fatalf("Failed to initialize repository: %v", err)
 		}
-		fmt.Println("init called")
 	},
 }
 
