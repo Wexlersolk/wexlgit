@@ -12,19 +12,19 @@ func InitRepository() error {
 		return fmt.Errorf("failed to get current working directory: %w", err)
 	}
 	wgitDir := filepath.Join(dir, ".wgit")
-	if err := createWgitDirectory(wgitDir); err != nil {
+	if err := CreateWgitDirectory(wgitDir); err != nil {
 		return err
 	}
 
-	if err := createSubdirectories(wgitDir); err != nil {
+	if err := CreateSubdirectories(wgitDir); err != nil {
 		return nil
 	}
 
-	if err := createHeadFile(wgitDir); err != nil {
+	if err := CreateHeadFile(wgitDir); err != nil {
 		return nil
 	}
 
-	if err := createConfigFile(wgitDir); err != nil {
+	if err := CreateConfigFile(wgitDir); err != nil {
 		return nil
 	}
 
@@ -33,7 +33,7 @@ func InitRepository() error {
 
 }
 
-func createWgitDirectory(wgitDir string) error {
+func CreateWgitDirectory(wgitDir string) error {
 	if err := os.Mkdir(wgitDir, 0755); err != nil {
 		if os.IsExist(err) {
 			return fmt.Errorf("repository already exists at %s", wgitDir)
@@ -43,7 +43,7 @@ func createWgitDirectory(wgitDir string) error {
 	return nil
 }
 
-func createSubdirectories(wgitDir string) error {
+func CreateSubdirectories(wgitDir string) error {
 	dirs := []string{"objects", "refs/heads", "refs/tags"}
 	for _, d := range dirs {
 		path := filepath.Join(wgitDir, d)
@@ -54,7 +54,7 @@ func createSubdirectories(wgitDir string) error {
 	return nil
 }
 
-func createHeadFile(wgitDir string) error {
+func CreateHeadFile(wgitDir string) error {
 	headFile := filepath.Join(wgitDir, "HEAD")
 	if err := os.WriteFile(headFile, []byte("ref: refs/heads/main\n"), 0644); err != nil {
 		return fmt.Errorf("failed to create HEAD file: %w", err)
@@ -62,7 +62,7 @@ func createHeadFile(wgitDir string) error {
 	return nil
 }
 
-func createConfigFile(wgitDir string) error {
+func CreateConfigFile(wgitDir string) error {
 	configFile := filepath.Join(wgitDir, "config")
 	configContent := `[core] 
 	repositoryformatversion = 0
