@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func AddExecute(files []string) error {
+func AddExecute(paths []string) error {
 	dir, err := os.Getwd()
 	if err != nil {
 		return fmt.Errorf("failed to get current working directory: %w", err)
@@ -17,15 +17,12 @@ func AddExecute(files []string) error {
 		return fmt.Errorf("not a wgit repository (run 'wgit init' first)")
 	}
 
-	for _, file := range files {
-		path := filepath.Join(dir, file)
-		if err := validateFilePath(path); err != nil {
-			return fmt.Errorf("invalid file %s: %w", file, err)
+	for _, path := range paths {
+		absPath := filepath.Join(dir, path)
+		if err := addPathToStagingArea(wgitDir, absPath); err != nil {
+			return fmt.Errorf("failed to add %s: %w", path, err)
 		}
-		if err := addFileToStagingArea(wgitDir, path); err != nil {
-			return fmt.Errorf("failed to add file %s: %w", file, err)
-		}
-		fmt.Printf("Added %s\n", file)
+		fmt.Printf("Added %s\n", path)
 	}
 	return nil
 }
