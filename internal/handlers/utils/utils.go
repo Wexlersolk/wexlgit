@@ -1,4 +1,4 @@
-package handlers
+package utils
 
 import (
 	"fmt"
@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 )
 
-func isWgitRepository(wgitDir string) bool {
+func IsWgitRepository(wgitDir string) bool {
 	_, err := os.Stat(wgitDir)
 	return !os.IsNotExist(err)
 }
@@ -57,4 +57,17 @@ func addFileToStagingArea(wgitDir, filePath string) error {
 		return err
 	}
 	return nil
+}
+
+func IsFileEmpty(path string) (bool, error) {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false, err
+	}
+	return info.Size() == 0, nil
+}
+
+func clearStagingArea(wgitDir string) error {
+	indexPath := filepath.Join(wgitDir, "index")
+	return os.WriteFile(indexPath, []byte{}, 0644)
 }
