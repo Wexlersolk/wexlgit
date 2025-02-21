@@ -28,6 +28,10 @@ func InitRepository() error {
 		return nil
 	}
 
+	if err := createMainBranchFile(wgitDir); err != nil {
+		return err
+	}
+
 	fmt.Printf("Initialized empty wgit repository at %s\n", wgitDir)
 	return nil
 
@@ -71,6 +75,14 @@ func CreateConfigFile(wgitDir string) error {
 `
 	if err := os.WriteFile(configFile, []byte(configContent), 0644); err != nil {
 		return fmt.Errorf("failed to create config file: %w", err)
+	}
+	return nil
+}
+
+func createMainBranchFile(wgitDir string) error {
+	mainBranchFile := filepath.Join(wgitDir, "refs", "heads", "main")
+	if err := os.WriteFile(mainBranchFile, []byte(""), 0644); err != nil {
+		return fmt.Errorf("failed to create main branch file: %w", err)
 	}
 	return nil
 }
