@@ -19,7 +19,7 @@ func validateFilePath(path string) error {
 	return nil
 }
 
-func addPathToStagingArea(wgitDir string, path string) error {
+func AddPathToStagingArea(wgitDir string, path string) error {
 	info, err := os.Stat(path)
 	if err != nil {
 		return fmt.Errorf("failed to stat path: %w", err)
@@ -67,7 +67,7 @@ func IsFileEmpty(path string) (bool, error) {
 	return info.Size() == 0, nil
 }
 
-func clearStagingArea(wgitDir string) error {
+func ClearStagingArea(wgitDir string) error {
 	indexPath := filepath.Join(wgitDir, "index")
 	return os.WriteFile(indexPath, []byte{}, 0644)
 }

@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func getCurrentCommit(wgitDir string) (string, error) {
+func GetCurrentCommit(wgitDir string) (string, error) {
 	headPath := filepath.Join(wgitDir, "HEAD")
 	data, err := os.ReadFile(headPath)
 	if err != nil {
@@ -28,7 +28,7 @@ func getCurrentCommit(wgitDir string) (string, error) {
 	return strings.TrimSpace(string(data)), nil
 }
 
-func updateCurrentBranch(wgitDir string, commitID string) error {
+func UpdateCurrentBranch(wgitDir string, commitID string) error {
 	headPath := filepath.Join(wgitDir, "HEAD")
 	data, err := os.ReadFile(headPath)
 	if err != nil {

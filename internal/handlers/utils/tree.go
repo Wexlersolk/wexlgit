@@ -14,7 +14,7 @@ type indexEntry struct {
 	blobID string
 }
 
-func createTreeFromIndex(wgitDir string) (string, error) {
+func CreateTreeFromIndex(wgitDir string) (string, error) {
 	indexPath := filepath.Join(wgitDir, "index")
 	entries, err := readIndexEntries(indexPath)
 	if err != nil {
