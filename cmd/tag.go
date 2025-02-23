@@ -12,8 +12,8 @@ var tagCmd = cobra.Command{
 	Short: "short explanation of tag",
 	Long:  "long explanation of tag",
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := handlers.TagExecute("test_tag"); err != nil {
-			log.Fatalf("Failed to commit: %v", err)
+		if err := handlers.TagExecute(args); err != nil {
+			log.Fatalf("Failed to tag: %v", err)
 		}
 	}}
 
