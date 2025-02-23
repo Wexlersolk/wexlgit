@@ -19,6 +19,5 @@ func updateIndex(wgitDir string, filePath string, blobID string) error {
 	if _, err := f.WriteString(entry); err != nil {
 		return fmt.Errorf("Failed to write to index file: %w", err)
 	}
-
 	return nil
 }
